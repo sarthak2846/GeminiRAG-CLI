@@ -6,6 +6,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import { RunnableSequence } from "@langchain/core/runnables";
 import combineHistory from "./model.js";
 import "dotenv/config";
+import { BlobApiResponse } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch/db_control/runtime.js";
 
 // configuration  for vector creation of question
 
@@ -83,7 +84,10 @@ Answer:
 async function main() {
   while (true) {
     const userProblem = readlineSync.question("Ask me anything--> ");
-
+     if (userProblem=="exit")
+     {
+      break;
+     }
     QuestionArray.push(userProblem);
 
     const bestQuestion = await combineHistory(QuestionArray);
